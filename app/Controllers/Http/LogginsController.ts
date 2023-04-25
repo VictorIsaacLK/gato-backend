@@ -68,25 +68,25 @@ export default class LogginsController
 
     if(user)
     {
-      const signedUrl = Route.makeSignedUrl('verifyEmail',
-      {id: user.id}, {expiresIn: '30m', prefixUrl: Env.get('APP_URL')})
+      //const signedUrl = Route.makeSignedUrl('verifyEmail',
+      //{id: user.id}, {expiresIn: '30m', prefixUrl: Env.get('APP_URL')})
 
       ////////////////////////////////////////////////////////////////
-      if(signedUrl)
-      {
-        const emailMessage = await new VerifyEmail(user, signedUrl)
-        emailMessage.sendLater()
+      //if(signedUrl)
+      //{
+        //const emailMessage = await new VerifyEmail(user, signedUrl)
+        //emailMessage.sendLater()
 
         return response.status(201).send({
           message: 'Revisa tu correo para activar tu cuenta!',
           user: user,
-          url: signedUrl
+          //url: signedUrl
         })
       }
       else
       {
         return response.status(400).send({
-          message: 'No se pudo enviar el correo de confirmacion'
+          message: 'No se pudo guardar el usuario'
         })
       }
     }
