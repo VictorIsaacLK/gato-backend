@@ -68,7 +68,6 @@ export default class LogginsController
     payload['password'] = await Hash.make(payload['password'])
     const code = (Math.floor(Math.random() * 8999) - 33).toString()
     payload['code'] = code
-    payload['role_id'] = 2
     const user = await User.create(payload)
 
     if(user)
