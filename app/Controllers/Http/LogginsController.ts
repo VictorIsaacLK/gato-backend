@@ -33,11 +33,11 @@ export default class LogginsController
         rules.required(),
         // rules.minLength(4)
       ]),
-      phone: schema.string({
-        // trim: true, escape: true
-      }, [
-        rules.required()
-      ]),
+      // phone: schema.string({
+      //   // trim: true, escape: true
+      // }, [
+      //   rules.required()
+      // ]),
     });
 
     const payload = await request.validate
@@ -51,8 +51,6 @@ export default class LogginsController
         "email.unique": "El email ya está en uso",
 
         "password.required": "La contraseña es requerida",
-
-        "telefono.required": "El teléfono es requerido",
       }})
 
     payload['password'] = await Hash.make(payload['password'])
