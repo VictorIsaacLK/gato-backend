@@ -34,3 +34,11 @@ Route.post('/login', 'user/UsersController.login').as('login')
 Route.group(()=> {
   Route.get('/logout', 'user/UsersController.logout').as('logout')
 }).middleware(['auth:api'])
+
+
+// start/routes.ts
+
+
+Route.post('/game', 'GamesController.create')
+Route.put('/game/:id/move', 'GamesController.move')
+
