@@ -29,7 +29,7 @@ Route.get('/verify/:id', 'LogginsController.verifyEmail').as('verifyEmail')
 Route.post('/verify/:id', 'LogginsController.verifyCode').as('verifyCode')
 
 
-Route.post('/login', 'user/UsersController.login').as('login')
+Route.post('/login', 'LogginsController.login').as('login')
 
 Route.group(()=> {
   Route.get('/logout', 'user/UsersController.logout').as('logout')
