@@ -134,17 +134,17 @@ export default class LogginsController
   {
     const newLogginSchema = schema.create({
       email: schema.string({
-        trim: true
+        // trim: true
       }, [
         rules.required(),
         rules.email(),
         rules.exists({table: 'users', column: 'email'})
       ]),
       password: schema.string({
-        trim: true
+        // trim: true
       }, [
         rules.required(),
-        rules.minLength(4)
+        // rules.minLength(4)
       ]),
     });
 
@@ -157,7 +157,7 @@ export default class LogginsController
         "email.exist": "El email debe haber sido registrado",
 
         "password.required": "La contraseña es requerida",
-        "password.minLength": "La contraseña debe tener al menos 4 caracteres"
+        // "password.minLength": "La contraseña debe tener al menos 4 caracteres"
       }
     });
 
