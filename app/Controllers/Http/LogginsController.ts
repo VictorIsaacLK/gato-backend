@@ -36,9 +36,7 @@ export default class LogginsController
       phone: schema.string({
         trim: true, escape: true
       }, [
-        rules.required(),
-        rules.minLength(10),
-        rules.maxLength(10)
+        rules.required()
       ]),
     });
 
@@ -61,8 +59,6 @@ export default class LogginsController
         "password.minLength": "La contraseña debe tener al menos 4 caracteres",
 
         "telefono.required": "El teléfono es requerido",
-        "telefono.minLength": "Debe tener al menos 10 caracteres",
-        "telefono.maxLength": "Debe tener como máximo 10 caracteres",
       }})
 
     payload['password'] = await Hash.make(payload['password'])
