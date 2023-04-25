@@ -80,7 +80,7 @@ export default class LogginsController
         return response.status(201).send({
           message: 'Revisa tu correo para activar tu cuenta!',
           user: user,
-          url: signedUrl
+          // url: signedUrl
         })
       // }
       // else
