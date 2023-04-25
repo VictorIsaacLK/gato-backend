@@ -14,27 +14,27 @@ export default class LogginsController
   {
     const newUserSchema = schema.create({
       name: schema.string({
-        trim: true, escape: true
+        // trim: true, escape: true
       }, [
         rules.required(),
-        rules.maxLength(100),
-        rules.minLength(3)
+        // rules.maxLength(100),
+        // rules.minLength(3)
       ]),
       email: schema.string({
-        trim: true
+        // trim: true
       }, [
         rules.required(),
         rules.email(),
         rules.unique({ table: 'users', column : 'email'})
       ]),
       password: schema.string({
-        trim: true
+        // trim: true
       }, [
         rules.required(),
-        rules.minLength(4)
+        // rules.minLength(4)
       ]),
       phone: schema.string({
-        trim: true, escape: true
+        // trim: true, escape: true
       }, [
         rules.required()
       ]),
@@ -45,18 +45,12 @@ export default class LogginsController
       messages:
       {
         "name.required": "El nombre es requerido",
-        "name.string": "El nombre debe ser un texto",
-        "name.minLength": "El nombre debe tener al menos 3 caracteres",
-        "name.maxLength": "El nombre debe tener como máximo 100 caracteres",
 
         "email.required": "El email es requerido",
-        "email.string": "El email debe ser un texto",
         "email.email": "El email debe ser un email válido",
         "email.unique": "El email ya está en uso",
 
         "password.required": "La contraseña es requerida",
-        "password.string": "La contraseña debe ser un texto",
-        "password.minLength": "La contraseña debe tener al menos 4 caracteres",
 
         "telefono.required": "El teléfono es requerido",
       }})
@@ -77,11 +71,11 @@ export default class LogginsController
       //   const emailMessage = await new VerifyEmail(user, signedUrl)
       //   emailMessage.sendLater()
 
-        return response.status(201).send({
-          message: 'Revisa tu correo para activar tu cuenta!',
-          user: user,
-          // url: signedUrl
-        })
+      return response.status(201).send({
+        message: 'Revisa tu correo para activar tu cuenta!',
+        user: user,
+        // url: signedUrl
+      })
       // }
       // else
       // {
