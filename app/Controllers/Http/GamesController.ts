@@ -1,75 +1,40 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
+import { GameService } from 'App/services/GameService';
+import { Player } from 'App/types';
 
-const WINNINGS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
+const gameService = new GameService();
 
 export default class GameController {
-  private games = new Map<string, { gameState: string[], currentPlayer: string }>()
-
   public async create({ response }: HttpContextContract) {
-    const gameId = Date.now().toString()
-    this.games.set(gameId, {
-      gameState: Array(9).fill(''),
-      currentPlayer: 'X'
-    })
-
-    response.status(201).json({ gameId })
+    const game = gameService.createGame();
+    response.status(201).json(game);
   }
 
-  public async move({ request, response }: HttpContextContract) {
-    const gameId = request.param('id')
-    const { cellIndex } = request.body()
+  public async join({ params, response }: HttpContextContract) {
+    const gameId = params.id;
+    const game = gameService.joinGame(gameId);
 
-    const game = this.games.get(gameId)
-
-    if (!game || game.gameState[cellIndex] !== '') {
-      response.status(400).json({ message: 'Invalid move' })
-      return
+    if (!game) {
+      response.status(404).json({ message: 'Game not found' });
+    } else {
+      response.json(game);
     }
-
-    game.gameState[cellIndex] = game.currentPlayer
-    game.currentPlayer = game.currentPlayer === 'X' ? 'O' : 'X'
-
-    const result = this.checkGameState(game.gameState)
-
-    response.json({
-      gameState: game.gameState,
-      result,
-      currentPlayer: game.currentPlayer
-    })
   }
 
-  private checkGameState(gameState: string[]) {
-    for (const winCondition of WINNINGS) {
-      const [a, b, c] = winCondition
-      const position1 = gameState[a]
-      const position2 = gameState[b]
-      const position3 = gameState[c]
+  public async makeMove({ request, params, response }: HttpContextContract) {
+    const gameId = params.id;
+    const { player, x, y } = request.body();
 
-      if (position1 === '' || position2 === '' || position3 === '') {
-        continue
-      }
+    const game = gameService.makeMove(gameId, player, x, y);
 
-      if (position1 === position2 && position2 === position3) {
-        return {
-          status: 'win',
-          winner: position1
-        }
-      }
+    if (!game) {
+      response.status(404).json({ message: 'Game not found' });
+    } else if (game.winner) {
+      response.json({ message: `${game.winner} wins!`, board: game.board });
+    } else if (game.isDraw) {
+      response.json({ message: 'Draw!', board: game.board });
+    } else {
+      response.json(game);
     }
-
-    if (!gameState.includes('')) {
-      return { status: 'draw' }
-    }
-
-    return { status: 'ongoing' }
   }
 }

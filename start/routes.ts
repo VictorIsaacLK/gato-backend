@@ -42,3 +42,6 @@ Route.group(()=> {
 Route.post('/game', 'GamesController.create')
 Route.put('/game/:id/move', 'GamesController.move')
 
+Route.get('/create', 'GamesController.create')
+Route.post('/ingresar', 'GamesController.join')
+
